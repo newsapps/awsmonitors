@@ -1,6 +1,7 @@
 DEBUG = False
 
 CACHE_FILE = '/tmp/cloudwatch-varnish.csv'
+NGINX_CACHE_FILE = '/tmp/cloudwatch-nginx.csv'
 
 # Metrics from varnishstat to report to AWS.
 INCLUDE_METRICS = (
