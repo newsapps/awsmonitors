@@ -11,6 +11,8 @@ import settings
 import boto.ec2.cloudwatch
 c = boto.ec2.cloudwatch.connect_to_region('us-east-1')
 
+instance_id = get_instance_id()
+
 
 def main():
     try:
@@ -104,7 +106,7 @@ def push_metric(key, value, unit=None):
         key,
         value=value,
         unit=unit,
-        dimensions={"InstanceId": get_instance_id()})
+        dimensions={"InstanceId": instance_id})
 
 
 def get_instance_id():
