@@ -29,4 +29,20 @@ You have to make sure you have	 the following in your nginx config:
 		}
 	}
 
-Thanks!
+## Deploying
+
+Deployment is handled through Fabric. *Do not save server information in the fable!*
+
+To setup a new server:
+
+	fab setup -H ec2-x-x-x-x.compute-x.amazonaws.com -u myusername
+
+To update these scripts on a server:
+
+	fab update -H ec2-x-x-x-x.compute-x.amazonaws.com -u myusername
+
+To install the crontab on a server:
+
+	fab install_cron:crontab-na-varnish -H ec2-x-x-x-x.compute-x.amazonaws.com -u myusername
+
+For the `install_cron` command, you need to create a `crontab-creds` file. Copy the `crontab-creds.example` to `crontab-creds` and fill in the AWS values. The `install_cron` command takes an argument which is the name of the crontab file to install from the root of this repo.
