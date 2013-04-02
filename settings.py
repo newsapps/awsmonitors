@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 
 CACHE_FILE = '/tmp/cloudwatch-varnish.csv'
 
