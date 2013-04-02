@@ -1,0 +1,2 @@
+*/5 * * * * wordpress /usr/bin/python /home/wordpress/awsmonitors/nginx-aws-logger.py
+*/5 * * * * wordpress /home/wordpress/awsmonitors/aws-scripts-mon/mon-put-instance-data.pl --aws-access-key-id=$AWS_ACCESS_KEY_ID --aws-secret-key=$AWS_SECRET_ACCESS_KEY --mem-util --disk-space-util --disk-space-avail --disk-path=/ --from-cron

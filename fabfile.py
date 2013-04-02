@@ -17,7 +17,7 @@ def update():
         run('git pull')
 
 
-def install_cron():
+def install_cron(filename):
     with cd('awsmonitors'):
-        sudo('cp crontab /etc/cron.d/awsmonitors')
-        sudo('service cron reload')
+        sudo('cp %s /etc/cron.d/awsmonitors' % filename)
+        sudo('service cron restart')
