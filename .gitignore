@@ -1,3 +1,6 @@
+crontab-creds
+
+
 *.py[cod]
 
 # C extensions
