@@ -59,7 +59,7 @@ def main():
             else:
                 hit_rate = float(delta_hits) / (delta_hits + delta_misses)
 
-            data.append(('hit_rate', hit_rate, 'Percent'))
+            data.append(('hit_rate', hit_rate*100, 'Percent'))
 
     except Exception, e:
         print e
