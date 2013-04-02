@@ -1,2 +1,2 @@
 */5 * * * * newsapps /usr/bin/python /home/newsapps/awsmonitors/nginx-aws-logger.py
-*/5 * * * * newsapps /home/newsapps/aws-scripts-mon/mon-put-instance-data.pl --aws-access-key-id=$AWS_ACCESS_KEY_ID --aws-secret-key=$AWS_SECRET_ACCESS_KEY --mem-util --disk-space-util --disk-path=/ --from-cron
+*/5 * * * * newsapps /home/newsapps/awsmonitors/aws-scripts-mon/mon-put-instance-data.pl --aws-access-key-id=$AWS_ACCESS_KEY_ID --aws-secret-key=$AWS_SECRET_ACCESS_KEY --mem-util --disk-space-util --disk-path=/ --from-cron

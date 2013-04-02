@@ -7,9 +7,6 @@ env.git_repo = "https://github.com/newsapps/awsmonitors.git"
 def setup():
     run('git clone %(git_repo)s' % env)
     sudo('apt-get -y install unzip libwww-perl libcrypt-ssleay-perl')
-    run('wget http://ec2-downloads.s3.amazonaws.com/cloudwatch-samples/CloudWatchMonitoringScripts-v1.1.0.zip')
-    run('unzip CloudWatchMonitoringScripts-v1.1.0.zip')
-    run('rm CloudWatchMonitoringScripts-v1.1.0.zip')
 
 
 def update():
