@@ -14,8 +14,9 @@ c = boto.ec2.cloudwatch.connect_to_region('us-east-1')
 
 def main():
     try:
-        with urlopen('http://localhost:8000/nginx_status') as wp:
-            result = wp.read()
+        wp = urlopen('http://localhost:8000/nginx_status')
+        result = wp.read()
+        wp.close()
     except Exception, ex:
         result = None
 
