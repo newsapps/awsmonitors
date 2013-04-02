@@ -11,7 +11,12 @@ import settings
 import boto.ec2.cloudwatch
 c = boto.ec2.cloudwatch.connect_to_region('us-east-1')
 
-instance_id = get_instance_id()
+if settings.DEBUG:
+    instance_id = 'i-7bb79118'
+else:
+    fp = urlopen('http://169.254.169.254/latest/meta-data/instance-id')
+    instance_id = fp.read()
+    fp.close()
 
 
 def main():
@@ -107,16 +112,6 @@ def push_metric(key, value, unit=None):
         value=value,
         unit=unit,
         dimensions={"InstanceId": instance_id})
-
-
-def get_instance_id():
-    if settings.DEBUG:
-        return 'i-7bb79118'
-
-    fp = urlopen('http://169.254.169.254/latest/meta-data/instance-id')
-    data = fp.read()
-    fp.close()
-    return data
 
 
 if __name__ == '__main__':
