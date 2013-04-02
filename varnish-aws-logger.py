@@ -17,6 +17,7 @@ def main():
 
     if not result:
         print 'status error Varnish is not running.'
+        push_metric('StatusCheckFailed', 1)
         sys.exit()
 
     data = []
@@ -61,9 +62,11 @@ def main():
     except Exception, e:
         print e
         print 'status warn Error parsing varnishstat output.'
+        push_metric('StatusCheckFailed', 1)
         sys.exit()
 
     print 'status ok Varnish is running.'
+    push_metric('StatusCheckFailed', 0)
 
     with open(settings.CACHE_FILE, 'w') as f:
         f.write('\n'.join([k+','+str(v) for k, v in new_data.items()]))

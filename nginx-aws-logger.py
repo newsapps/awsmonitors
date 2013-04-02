@@ -22,6 +22,7 @@ def main():
 
     if not result:
         print 'Cannot connect to nginx'
+        push_metric('StatusCheckFailed', 1)
         sys.exit()
 
     data = []
@@ -83,9 +84,11 @@ def main():
     except Exception, e:
         print e
         print 'status warn Error parsing varnishstat output.'
+        push_metric('StatusCheckFailed', 1)
         sys.exit()
 
     print 'status ok Nginx is running.'
+    push_metric('StatusCheckFailed', 0)
 
     with open(settings.NGINX_CACHE_FILE, 'w') as f:
         f.write('\n'.join([k+','+str(v) for k, v in new_data.items()]))
