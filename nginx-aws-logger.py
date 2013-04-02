@@ -48,7 +48,7 @@ def main():
             if not r:
                 continue
 
-            match = re.match(r'Active connections: (\d+)', r)
+            match = re.match(r'^Active connections: (\d+)$', r.strip())
             if match:
                 new_data['ActiveConnections'] = int(match.group(1))
                 data.append((
@@ -57,7 +57,7 @@ def main():
                     'Count'))
                 continue
 
-            match = re.match(r'(\d+)\s+(\d+)\s+(\d+)', r)
+            match = re.match(r'^(\d+)\s+(\d+)\s+(\d+)$', r.strip())
             if match:
                 new_data['AcceptedConnections'] = int(match.group(1))
                 if 'AcceptedConnections' in old_data:
@@ -70,22 +70,28 @@ def main():
                 if 'HandledConnections' in old_data:
                     data.append((
                         'HandledConnections',
-                        int(match.group(1)) - int(old_data['HandledConnections']),
+                        int(match.group(2)) - int(old_data['HandledConnections']),
                         'Count'))
 
                 new_data['Requests'] = int(match.group(3))
                 if 'Requests' in old_data:
                     data.append((
                         'Requests',
-                        int(match.group(1)) - int(old_data['Requests']),
+                        int(match.group(3)) - int(old_data['Requests']),
                         'Count'))
                 continue
 
-            match = re.match(r'Reading: (\d+) Writing: (\d+) Waiting: (\d+)', r)
+            match = re.match(r'^Reading:\s+(\d+)\s+Writing:\s+(\d+)\s+Waiting:\s+(\d+)$', r.strip())
             if match:
                 new_data['ConnectionReading'] = int(match.group(1))
+                data.append((
+                    'ConnectionReading', int(match.group(1)), 'Count'))
                 new_data['ConnectionWriting'] = int(match.group(2))
+                data.append((
+                    'ConnectionWriting', int(match.group(2)), 'Count'))
                 new_data['ConnectionWaiting'] = int(match.group(3))
+                data.append((
+                    'ConnectionWaiting', int(match.group(3)), 'Count'))
                 continue
 
     except Exception, e:
@@ -101,7 +107,7 @@ def main():
         f.write('\n'.join([k+','+str(v) for k, v in new_data.items()]))
 
     for d in data:
-        #print d
+        print d
         push_metric(*d)
 
 
