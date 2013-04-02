@@ -1,0 +1,117 @@
+#!/usr/bin/env python
+
+import os
+import re
+import subprocess
+import sys
+from urllib2 import urlopen
+
+import settings
+
+import boto.ec2.cloudwatch
+c = boto.ec2.cloudwatch.connect_to_region('us-east-1')
+
+
+def main():
+    try:
+        with urlopen('http://localhost:8000/nginx_status') as wp:
+            result = wp.read()
+    except Exception, ex:
+        result = None
+
+    if not result:
+        print 'Cannot connect to nginx'
+        sys.exit()
+
+    data = []
+    old_data = {}
+    new_data = {}
+
+    if os.path.exists(settings.NGINX_CACHE_FILE):
+        with open(settings.NGINX_CACHE_FILE, 'r') as f:
+            for l in f.readlines():
+                parts = l.strip().split(',')
+                old_data[parts[0]] = int(parts[1])
+
+    # process status output
+    try:
+        for r in result.split('\n'):
+            if not r:
+                continue
+
+            match = re.match(r'Active connections: (\d+)', r)
+            if match:
+                new_data['ActiveConnections'] = int(match.group(1))
+                data.append((
+                    'ActiveConnections',
+                    int(match.group(1)),
+                    'Count'))
+                continue
+
+            match = re.match(r'(\d+)\s+(\d+)\s+(\d+)', r)
+            if match:
+                new_data['AcceptedConnections'] = int(match.group(1))
+                if 'AcceptedConnections' in old_data:
+                    data.append((
+                        'AcceptedConnections',
+                        int(match.group(1)) - int(old_data['AcceptedConnections']),
+                        'Count'))
+
+                new_data['HandledConnections'] = int(match.group(2))
+                if 'HandledConnections' in old_data:
+                    data.append((
+                        'HandledConnections',
+                        int(match.group(1)) - int(old_data['HandledConnections']),
+                        'Count'))
+
+                new_data['Requests'] = int(match.group(3))
+                if 'Requests' in old_data:
+                    data.append((
+                        'Requests',
+                        int(match.group(1)) - int(old_data['Requests']),
+                        'Count'))
+                continue
+
+            match = re.match(r'Reading: (\d+) Writing: (\d+) Waiting: (\d+)', r)
+            if match:
+                new_data['ConnectionReading'] = int(match.group(1))
+                new_data['ConnectionWriting'] = int(match.group(2))
+                new_data['ConnectionWaiting'] = int(match.group(3))
+                continue
+
+    except Exception, e:
+        print e
+        print 'status warn Error parsing varnishstat output.'
+        sys.exit()
+
+    print 'status ok Nginx is running.'
+
+    with open(settings.NGINX_CACHE_FILE, 'w') as f:
+        f.write('\n'.join([k+','+str(v) for k, v in new_data.items()]))
+
+    for d in data:
+        #print d
+        push_metric(*d)
+
+
+def push_metric(key, value, unit=None):
+    c.put_metric_data(
+        'Nginx',
+        key,
+        value=value,
+        unit=unit,
+        dimensions={"InstanceId": get_instance_id()})
+
+
+def get_instance_id():
+    if settings.DEBUG:
+        return 'i-7bb79118'
+
+    fp = urlopen('http://169.254.169.254/latest/meta-data/instance-id')
+    data = fp.read()
+    fp.close()
+    return data
+
+
+if __name__ == '__main__':
+    main()
