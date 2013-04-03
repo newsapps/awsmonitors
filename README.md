@@ -31,7 +31,7 @@ You have to make sure you have	 the following in your nginx config:
 
 ## Deploying
 
-Deployment is handled through Fabric. *Do not save server information in the fable!*
+Deployment is handled through Fabric. *Do not save server information in the fabfile!*
 
 To setup a new server:
 
