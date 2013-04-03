@@ -1,7 +1,7 @@
 from fabric.api import run, sudo, env, put
 from fabric.context_managers import cd
 
-env.git_repo = "https://github.com/newsapps/awsmonitors.git"
+env.git_repo = "git://github.com/newsapps/awsmonitors.git"
 
 
 def setup():
@@ -22,7 +22,8 @@ def install_cron(filename):
     with cd('awsmonitors'):
         sudo('cat crontab-creds %s > /etc/cron.d/awsmonitors' % filename)
         sudo('service cron restart')
+        run('rm crontab-creds')
 
 
 def remove_cloudkick():
-    sudo('apt-get remove cloudkick-agent cloudkick-config')
+    sudo('apt-get -y remove cloudkick-agent cloudkick-config')

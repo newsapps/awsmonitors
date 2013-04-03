@@ -3,5 +3,4 @@ boto==2.8.0
 ipython==0.13.1
 paramiko==1.10.0
 pycrypto==2.6
-readline==6.2.4.1
 wsgiref==0.1.2
