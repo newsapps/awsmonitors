@@ -46,3 +46,13 @@ To install the crontab on a server:
 	fab install_cron:crontab-na-varnish -H ec2-x-x-x-x.compute-x.amazonaws.com -u myusername
 
 For the `install_cron` command, you need to create a `crontab-creds` file. Copy the `crontab-creds.example` to `crontab-creds` and fill in the AWS values. The `install_cron` command takes an argument which is the name of the crontab file to install from the root of this repo.
+
+## Alarms
+
+You can automatically create alarms for a ec2 instance by using the `setup_alarms.py` script. If the script is run on an ec2 instance, it will automatically detect and use it's own instance id. You can optionally pass an instance id as the first parameter.
+
+The `setup_alarms.py` script will look for an `ALARMS` variable in the `alarm_config.py` file. The script will attempt to create all alarms that are described in this config for one EC2 instance. If the metric described in one of the alarms is not available for this EC2 instance, that alarm will be skipped. The script will overwrite any alarms with the same name. This way if you change the alarm config and run the script, it will update the alarm in CloudWatch.
+
+Use the `setup_alarms` fab command to run the script on a server:
+
+  fab setup_alarms -H ec2-x-x-x-x.compute-x.amazonaws.com -u myusername 
