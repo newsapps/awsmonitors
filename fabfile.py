@@ -7,6 +7,7 @@ env.git_repo = "git://github.com/newsapps/awsmonitors.git"
 def setup():
     run('git clone %(git_repo)s' % env)
     sudo('apt-get -y install unzip libwww-perl libcrypt-ssleay-perl')
+    sudo('easy_install -U boto==2.8')
 
 
 def update():
@@ -32,3 +33,9 @@ def setup_alarms():
 
 def remove_cloudkick():
     sudo('apt-get -y remove cloudkick-agent cloudkick-config')
+
+
+def remove():
+    run('rm -Rf awsmonitors')
+    sudo('rm /etc/cron.d/awsmonitors')
+    sudo('service cron restart')
