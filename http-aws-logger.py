@@ -30,11 +30,11 @@ for url in CHECK_URLS:
     start = clock()
     try:
         webpage = urlopen(url, timeout=15)
-        req_time = clock() - start
         code = webpage.getcode()
-        #headers = webpage.info()
+        headers = webpage.info()
         content = webpage.read()
         webpage.close()
+        req_time = clock() - start
         del webpage
 
         if code == 200 and len(content.strip()) > 1:
