@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-import os
-import re
-import subprocess
-import sys
-
 from urllib2 import urlopen, URLError
 from time import clock
 
@@ -13,20 +8,7 @@ import settings
 import boto.ec2.cloudwatch
 c = boto.ec2.cloudwatch.connect_to_region('us-east-1')
 
-CHECK_URLS = (
-    'http://www.chicagonow.com',
-    'http://www.vivelohoy.com',
-    'http://themash.com',
-    'http://blogs.chicagoshopping.com',
-    'http://members.chicagotribune.com/learn-more/',
-    'http://community.chicagotribune.com',
-    'http://cars.chicagotribune.com/fuel-efficient/',
-    'http://crime.chicagotribune.com/chicago/',
-    'http://schools.chicagotribune.com',
-)
-
-
-for url in CHECK_URLS:
+for url in settings.CHECK_URLS:
     start = clock()
     try:
         webpage = urlopen(url, timeout=15)

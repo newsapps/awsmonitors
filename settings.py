@@ -1,7 +1,25 @@
 DEBUG = False
 
-CACHE_FILE = '/tmp/cloudwatch-varnish.csv'
+# Check these URLs
+CHECK_URLS = (
+    'http://www.chicagonow.com',
+    'http://www.vivelohoy.com',
+    'http://themash.com',
+    'http://blogs.chicagoshopping.com',
+    'http://members.chicagotribune.com/learn-more/',
+    'http://community.chicagotribune.com',
+    'http://cars.chicagotribune.com/fuel-efficient/',
+    'http://crime.chicagotribune.com/chicago/',
+    'http://schools.chicagotribune.com',
+)
+
+# Cache stats in this file for nginx in between runs in order
+# to calculate change
 NGINX_CACHE_FILE = '/tmp/cloudwatch-nginx.csv'
+
+# Cache stats in this file for varnish in between runs in order
+# to calculate change
+CACHE_FILE = '/tmp/cloudwatch-varnish.csv'
 
 # Metrics from varnishstat to report to AWS.
 INCLUDE_METRICS = (

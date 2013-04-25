@@ -26,9 +26,9 @@ def install_cron(filename):
         run('rm crontab-creds')
 
 
-def setup_alarms():
+def setup_instance_alarms():
     with cd('awsmonitors'):
-        run('./setup_alarms.py')
+        run('./setup_instance_alarms.py')
 
 
 def remove_cloudkick():

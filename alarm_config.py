@@ -1,4 +1,26 @@
-ALARMS = [
+# These alarms are created for each URL that we monitor
+HTTP_ALARMS = [
+    {
+        "namespace": "HTTP",
+        "metric_name": "StatusCheckFailed",
+        "alarm": {
+            "name": "%s IS DOWN",
+            "comparison": ">",
+            "threshold": "0",
+            "period": "300",
+            "evaluation_periods": "3",
+            "statistic": "Minimum",
+            "actions": [
+                "arn:aws:sns:us-east-1:615594547923:NotifyMe",
+                "arn:aws:sns:us-east-1:615594547923:emergency-notify"
+            ],
+            "description": "Can't load this URL"
+        }
+    },
+]
+
+# These alarms are created for each instance if the metric is available
+INSTANCE_ALARMS = [
     {
         "namespace": "AWS/EC2",
         "metric_name": "StatusCheckFailed",
@@ -68,7 +90,7 @@ ALARMS = [
             "comparison": ">",
             "threshold": "0",
             "period": "300",
-            "evaluation_periods": "1",
+            "evaluation_periods": "3",
             "statistic": "Average",
             "actions": [
                 "arn:aws:sns:us-east-1:615594547923:NotifyMe",
@@ -85,11 +107,10 @@ ALARMS = [
             "comparison": ">",
             "threshold": "0",
             "period": "300",
-            "evaluation_periods": "1",
+            "evaluation_periods": "3",
             "statistic": "Average",
             "actions": [
                 "arn:aws:sns:us-east-1:615594547923:NotifyMe",
-                "arn:aws:sns:us-east-1:615594547923:emergency-notify"
             ],
             "description": "Varnish requests to fetch from a backend are failing"
         }
@@ -106,7 +127,6 @@ ALARMS = [
             "statistic": "Average",
             "actions": [
                 "arn:aws:sns:us-east-1:615594547923:NotifyMe",
-                "arn:aws:sns:us-east-1:615594547923:emergency-notify"
             ],
             "description": "Varnish seems to be down"
         }
