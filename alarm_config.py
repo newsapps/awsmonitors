@@ -94,7 +94,6 @@ INSTANCE_ALARMS = [
             "statistic": "Average",
             "actions": [
                 "arn:aws:sns:us-east-1:615594547923:NotifyMe",
-                "arn:aws:sns:us-east-1:615594547923:emergency-notify"
             ],
             "description": "Varnish is failing to connect to a backend"
         }
@@ -127,6 +126,7 @@ INSTANCE_ALARMS = [
             "statistic": "Average",
             "actions": [
                 "arn:aws:sns:us-east-1:615594547923:NotifyMe",
+                "arn:aws:sns:us-east-1:615594547923:emergency-notify"
             ],
             "description": "Varnish seems to be down"
         }
