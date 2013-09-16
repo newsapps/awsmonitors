@@ -5,11 +5,14 @@ CHECK_URLS = (
     'http://www.chicagonow.com',
     'http://www.vivelohoy.com',
     'http://themash.com',
+    'http://www.robertfeder.com',
     'http://blogs.chicagoshopping.com',
+    'http://www.chicagoshopping.com',
     'http://members.chicagotribune.com/learn-more/',
     'http://community.chicagotribune.com',
     'http://cars.chicagotribune.com/fuel-efficient/',
     'http://crime.chicagotribune.com/chicago/',
+    'http://homicides.redeyechicago.com',
     'http://schools.chicagotribune.com',
 )
 
