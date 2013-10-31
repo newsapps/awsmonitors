@@ -5,9 +5,8 @@ env.git_repo = "git://github.com/newsapps/awsmonitors.git"
 
 
 def setup():
+    sudo('apt-get -y install python-boto git unzip libwww-perl libcrypt-ssleay-perl')
     run('git clone %(git_repo)s' % env)
-    sudo('apt-get -y install unzip libwww-perl libcrypt-ssleay-perl')
-    sudo('easy_install -U boto==2.8')
 
 
 def update():
