@@ -1,5 +1,6 @@
 from fabric.api import run, sudo, env, put
 from fabric.context_managers import cd
+import os
 
 env.git_repo = "git://github.com/newsapps/awsmonitors.git"
 
@@ -27,7 +28,7 @@ def install_cron(filename):
 
 def setup_instance_alarms():
     with cd('awsmonitors'):
-        run('./setup_instance_alarms.py')
+        run('AWS_ACCESS_KEY_ID=%(AWS_ACCESS_KEY_ID)s AWS_SECRET_ACCESS_KEY=%(AWS_SECRET_ACCESS_KEY)s ./setup_instance_alarms.py' % os.environ)
 
 
 def remove_cloudkick():
