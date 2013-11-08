@@ -15,6 +15,7 @@ CHECK_URLS = (
     'http://homicides.redeyechicago.com',
     'http://schools.chicagotribune.com',
     'http://cta-api-lb.tribapps.com/bustime/home.jsp',
+    'http://cbn.tribapps.com/stories',
 )
 
 # Cache stats in this file for nginx in between runs in order
