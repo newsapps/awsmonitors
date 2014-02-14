@@ -11,7 +11,7 @@ CHECK_URLS = (
     'http://members.chicagotribune.com/learn-more/',
     'http://community.chicagotribune.com',
     'http://cars.chicagotribune.com/fuel-efficient/',
-    'http://crime.chicagotribune.com/chicago/',
+    'http://crime.chicagotribune.com/',
     'http://homicides.redeyechicago.com',
     'http://schools.chicagotribune.com',
     'http://cta-api-lb.tribapps.com/bustime/home.jsp',
